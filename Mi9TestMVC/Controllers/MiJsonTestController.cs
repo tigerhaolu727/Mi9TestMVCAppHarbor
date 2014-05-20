@@ -46,7 +46,7 @@ namespace Mi9TestMVC.Controllers
             catch (Exception ex)
             {
 
-                ErrorResponse(HttpStatusCode.BadRequest, "Could not decode request: JSON parsing failed");
+                ErrorResponse(HttpStatusCode.BadRequest, "Could not decode request");
                 return null;
             }
 
@@ -67,7 +67,7 @@ namespace Mi9TestMVC.Controllers
         {
             HttpContext.Current.Response.StatusCode = (int)httpStatusCode;
 
-            HttpContext.Current.Response.ContentType = "application/json; charset=UTF-8";
+            HttpContext.Current.Response.ContentType = "application/json";
 
             HttpContext.Current.Response.Write(Json.Encode(new { error = error }));
 
