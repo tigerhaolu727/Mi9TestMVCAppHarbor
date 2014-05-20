@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Http;
 using System.Net.Http;
-using System.Net.Http.Formatting;
-using System.Net.Http.Headers;
 using Newtonsoft.Json.Linq;
 
 namespace Mi9TestMVC.Controllers
@@ -50,14 +49,9 @@ namespace Mi9TestMVC.Controllers
             }
             catch (Exception ex)
             {
-                HttpContext.Current.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                HttpContext.Current.Response.Write(JObject.FromObject(new { error = "Could not decode request: JSON parsing failed" }).ToString());
-                HttpContext.Current.Response.AppendHeader("error", "Could not decode request: JSON parsing failed");
-                HttpContext.Current.Response.ContentType = "application/json";
-                HttpContext.Current.Response.ContentEncoding = System.Text.Encoding.UTF8;
-                HttpContext.Current.Response.End();
-
-                return null;
+               var myCustomError = new HttpError{ { "error", 37 } };
+               return Request.CreateErrorResponse(HttpStatusCode.BadRequest, myCustomError);
+               
             }
 
         }

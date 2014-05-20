@@ -19,7 +19,7 @@ namespace Mi9TestMVCAppHarbor.Controllers
         }
 
         // POST api/MiJsonTest
-        public IHttpActionResult Post()
+        public JObject Post()
         {
             try
             {
@@ -41,13 +41,16 @@ namespace Mi9TestMVCAppHarbor.Controllers
                         result.Add(new { image = payload["image"] != null ? payload["image"]["showImage"].Value<string>() : payload["image"], slug = payload["slug"].Value<string>(), title = payload["title"].Value<string>() });
                     }
                 }
-                return Ok(new JObject(new JProperty("response", JArray.FromObject(result))));
+                return new JObject(new JProperty("response", JArray.FromObject(result)));
             }
             catch (Exception ex)
             {
-                return new BadRequestResult();
+                HttpContext.Current.AddOnRequestCompleted(h=>h.Response.StatusCode=(int) HttpStatusCode.BadRequest);
 
-                return new StatusCodeResult(HttpStatusCode.BadRequest, ModelState.AddModelError("error", "Could not decode request: JSON parsing failed"));
+                var response = Request.CreateResponse(HttpStatusCode.BadRequest);
+
+                return JObject.FromObject(response);
+
             }
 
         }

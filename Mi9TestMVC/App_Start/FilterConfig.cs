@@ -1,5 +1,5 @@
-﻿using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using Mi9TestMVC.Filters;
 
 namespace Mi9TestMVC
 {
@@ -8,6 +8,7 @@ namespace Mi9TestMVC
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             //filters.Add(new HandleErrorAttribute());
+            //filters.Add(new UnhandledExceptionFilter());
         }
     }
 }
