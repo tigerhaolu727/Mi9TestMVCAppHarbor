@@ -4,6 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
+using System.Net.Http.Headers;
+using System.Runtime.Remoting.Messaging;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Results;
@@ -19,7 +22,7 @@ namespace Mi9TestMVCAppHarbor.Controllers
         }
 
         // POST api/MiJsonTest
-        public JObject Post()
+        public IHttpActionResult Post()
         {
             try
             {
@@ -41,15 +44,11 @@ namespace Mi9TestMVCAppHarbor.Controllers
                         result.Add(new { image = payload["image"] != null ? payload["image"]["showImage"].Value<string>() : payload["image"], slug = payload["slug"].Value<string>(), title = payload["title"].Value<string>() });
                     }
                 }
-                return new JObject(new JProperty("response", JArray.FromObject(result)));
+                return Ok (new JObject(new JProperty("response", JArray.FromObject(result))));
             }
             catch (Exception ex)
             {
-                HttpContext.Current.AddOnRequestCompleted(h=>h.Response.StatusCode=(int) HttpStatusCode.BadRequest);
-
-                var response = Request.CreateResponse(HttpStatusCode.BadRequest);
-
-                return JObject.FromObject(response);
+                return Content<object>(HttpStatusCode.BadRequest, new { error = "Could not decode request: JSON parsing failed" }, new JsonMediaTypeFormatter(), "application/json");
 
             }
 

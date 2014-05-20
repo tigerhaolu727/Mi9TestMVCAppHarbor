@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System.Net.Http.Formatting;
 using System.Web.Http;
 
 namespace Mi9TestMVCAppHarbor
@@ -24,8 +24,8 @@ namespace Mi9TestMVCAppHarbor
                 defaults: new { controller = "MiJsonTest" }
             );
 
-            var appXmlType = config.Formatters.XmlFormatter.SupportedMediaTypes.FirstOrDefault(t => t.MediaType == "application/xml");
-            config.Formatters.XmlFormatter.SupportedMediaTypes.Remove(appXmlType);
+            config.Formatters.Clear();
+            config.Formatters.Add(new JsonMediaTypeFormatter());
         }
     }
 }
