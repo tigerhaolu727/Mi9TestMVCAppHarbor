@@ -498,7 +498,11 @@
                 contentType: "application/json",
                 success: function (data) {
                     $("#result").html(JSON.stringify(data));
-                }
+                },
+
+                error: function (error) {
+                    $("#result").html(JSON.stringify(error));
+            }
             });
         });
     });
