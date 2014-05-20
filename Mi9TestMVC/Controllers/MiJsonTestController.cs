@@ -11,9 +11,9 @@ namespace Mi9TestMVC.Controllers
 {
     public class MiJsonTestController : ApiController
     {
-        public void Get()
+        public JObject Get()
         {
-            ErrorResponse(HttpStatusCode.Forbidden, "This HttpMethod is forbidden");
+            return ErrorResponse(HttpStatusCode.Forbidden, "Forbidden", "This HttpMethod is forbidden");
         }
 
         // POST api/MiJsonTest
@@ -29,49 +29,43 @@ namespace Mi9TestMVC.Controllers
                 }
                 var data = Json.Decode(json);
 
-                var payloads = data.payload;
-
                 var result = new List<object>();
 
-                foreach (var payload in payloads)
+                if (data.payload != null)
                 {
-                    if (payload.drm == null || !payload.drm || payload.episodeCount == null || payload.episodeCount <= 0)
-                        continue;
-                    
-                    result.Add(new { image = payload.image != null ? payload.image.showImage : payload.image, slug = payload.slug, title = payload.title });
+                    var payloads = data.payload;
+                    foreach (var payload in payloads)
+                    {
+                        if (payload.drm == null || !payload.drm || payload.episodeCount == null || payload.episodeCount <= 0)
+                            continue;
+
+                        result.Add(new { image = payload.image != null ? payload.image.showImage : payload.image, slug = payload.slug, title = payload.title });
+                    }
                 }
 
                 return new JObject(new JProperty("response", JArray.FromObject(result)));
             }
             catch (Exception ex)
             {
-
-                ErrorResponse(HttpStatusCode.BadRequest, "Could not decode request");
-                return null;
+                return ErrorResponse(HttpStatusCode.BadRequest, "Bad Request", "Could not decode request: JSON parsing failed");
             }
 
         }
 
-        public void Put()
+        public JObject Put()
         {
-            ErrorResponse(HttpStatusCode.Forbidden, "This HttpMethod is forbidden");
+            return ErrorResponse(HttpStatusCode.Forbidden, "Forbidden", "This HttpMethod is forbidden");
         }
 
-        public void Delete()
+        public JObject Delete()
         {
-            ErrorResponse(HttpStatusCode.Forbidden, "This HttpMethod is forbidden");
+            return ErrorResponse(HttpStatusCode.Forbidden, "Forbidden", "This HttpMethod is forbidden");
         }
 
 
-        private void ErrorResponse(HttpStatusCode httpStatusCode, string error)
+        private JObject ErrorResponse(HttpStatusCode httpStatusCode, string statusText, string error)
         {
-            HttpContext.Current.Response.StatusCode = (int)httpStatusCode;
-
-            HttpContext.Current.Response.ContentType = "application/json";
-
-            HttpContext.Current.Response.Write(Json.Encode(new { error = error }));
-
-            HttpContext.Current.Response.End();
+            return JObject.FromObject(new { status = (int)httpStatusCode, statusText = statusText, error = error });
         }
     }
 }
