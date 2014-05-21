@@ -6,7 +6,6 @@ using System.Net;
 using System.Net.Http.Formatting;
 using System.Web;
 using System.Web.Http;
-using System.Web.Http.Results;
 using Newtonsoft.Json.Linq;
 
 namespace Mi9TestMVCAppHarbor.Controllers
@@ -15,7 +14,7 @@ namespace Mi9TestMVCAppHarbor.Controllers
     {
         public IHttpActionResult Get()
         {
-            return new BadRequestResult(this);
+            return Content<object>(HttpStatusCode.Forbidden, new { error = "Not supported" }, new JsonMediaTypeFormatter(), "application/json");
         }
 
         // POST api/MiJsonTest

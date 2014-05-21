@@ -27,6 +27,5 @@ I:\GitHub\Mi9TestMVCAppHarbor\Mi9TestMVCAppHarbor\bin\System.Web.WebPages.xml
 I:\GitHub\Mi9TestMVCAppHarbor\Mi9TestMVCAppHarbor\bin\System.Web.WebPages.Deployment.xml
 I:\GitHub\Mi9TestMVCAppHarbor\Mi9TestMVCAppHarbor\bin\System.Web.WebPages.Razor.xml
 I:\GitHub\Mi9TestMVCAppHarbor\Mi9TestMVCAppHarbor\bin\Antlr3.Runtime.pdb
-I:\GitHub\Mi9TestMVCAppHarbor\Mi9TestMVCAppHarbor\obj\Debug\Mi9TestMVCAppHarbor.csprojResolveAssemblyReference.cache
 I:\GitHub\Mi9TestMVCAppHarbor\Mi9TestMVCAppHarbor\obj\Debug\Mi9TestMVCAppHarbor.dll
 I:\GitHub\Mi9TestMVCAppHarbor\Mi9TestMVCAppHarbor\obj\Debug\Mi9TestMVCAppHarbor.pdb
